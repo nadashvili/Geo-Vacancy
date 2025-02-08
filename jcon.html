@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ვაკანსიები - JSON გენერაცია</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>მონაცემთა შეყვანა</h2>
+
+    <input type="number" id="id" placeholder="ID" required>
+    <input type="text" id="title" placeholder="ვაკანსიის სახელი" required>
+    <input type="text" id="company" placeholder="კომპანია" required>
+    <input type="text" id="city" placeholder="ქალაქი" required>
+    <input type="text" id="profession" placeholder="პროფესია" required>
+    <input type="text" id="schedule" placeholder="სამუშაო გრაფიკი" required>
+    <textarea id="description" placeholder="აღწერა" required></textarea>
+    <input type="email" id="contact" placeholder="საკონტაქტო პირი" required>
+    <input type="tel" id="phone" placeholder="ტელეფონი" required>
+
+    <button onclick="generateJson()">JSON გენერაცია</button>
+
+    <h3>გაყვანილი JSON:</h3>
+    <pre id="jsonOutput"></pre>
+    <button id="copyButton" onclick="copyJson()">კოპირება</button>
+  </div>
+
+  <script>
+    let vacancies = [];
+
+    function generateJson() {
+      const id = document.getElementById('id').value;
+      const title = document.getElementById('title').value;
+      const company = document.getElementById('company').value;
+      const city = document.getElementById('city').value;
+      const profession = document.getElementById('profession').value;
+      const schedule = document.getElementById('schedule').value;
+      const description = document.getElementById('description').value;
+      const contact = document.getElementById('contact').value;
+      const phone = document.getElementById('phone').value;
+
+      const vacancy = {
+        id: parseInt(id),
+        title: title,
+        company: company,
+        city: city,
+        profession: profession,
+        schedule: schedule,
+        description: description,
+        contact: contact,
+        phone: phone
+      };
+
+      vacancies.push(vacancy);
+
+      // Display JSON
+      document.getElementById('jsonOutput').textContent = JSON.stringify(vacancies, null, 2);
+    }
+
+    function copyJson() {
+      const jsonContent = document.getElementById('jsonOutput').textContent;
+      navigator.clipboard.writeText(jsonContent).then(function() {
+        alert('JSON წარმატებით ჩაიბარა!');
+      }, function(err) {
+        alert('ცდომა JSON-ის კოპირებისას: ' + err);
+      });
+    }
+  </script>
+
+</body>
+</html>
